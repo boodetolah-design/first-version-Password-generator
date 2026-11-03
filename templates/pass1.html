@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+   {% block content %}
+   {% if error %}
+    <p>{{ error }}</p>
+    <a href="/">Try again</a>
+     {% else %}
+        <header  style="text-align: center; font-size: 2.5rem;">{{ name }}</header>
+        <main  style="text-align: center; font-size: 1.5rem;"> now this is a password for you</main>
+        <footer style="text-align: center; font-size: 1.25rem; color: red;">{{password}}</footer> 
+     {% endif %}
+   {% endblock %}

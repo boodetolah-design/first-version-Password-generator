@@ -63,8 +63,4 @@ def gen():
           
     
     
-        #if not stay in the same page 
-
-
-        return render_template("pass.html" , passes=PASSWORDS)
     

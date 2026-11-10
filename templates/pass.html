@@ -2,10 +2,13 @@
 
 {% block content %}
 
-<form method="POST">
+<form action="/" method="POST">
     <div style="text-align: center;">
 <label for="name">name: </label>
-<input  placeholder="name" type="text" id="name" name="name">
+<input  placeholder="name" type="text" id="name" name="name">  
+{% for mode in passes %}
+<input type="radio" name="mode" value="{{mode}}">{{ mode }}
+        {% endfor %}
 <button>Generate</button>
 </div>
 </form>

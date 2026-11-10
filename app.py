@@ -1,5 +1,7 @@
-import random
+import random,  re , string
 from flask import Flask ,request, render_template
+
+PASSWORDS =["Random","Classic","Mixed"]
 
 app=Flask(__name__)
 
@@ -10,18 +12,59 @@ def gen():
         #check the name form the html page
 
         name=request.form.get("name")
+
         if not name :
-            #if the name is empty go to pass1 page and display error
             return render_template("pass1.html", error="error: please try again")
-        #if the user input something like his then capitlaize the first letter and then choose rand number between 1000 to 9999 and stick it togather
+        mode=request.form.get("mode") 
+        print(mode)
         
-        password=name.capitalize() + str(random.randint(1000,9999))
-        #RETURN back to pass1 page and take the name and the password with you
-        #check the name form the html page
-        return render_template("pass1.html",name=name,password=password)
+    
+        if mode not in PASSWORDS:
+               return render_template("pass1.html" ,  error="error: please try again")
+        if mode=="Classic":
+            password=name.capitalize() + str(random.randint(1000,9999))
+            return render_template("pass1.html",mode=mode,name=name,password=password)
+        elif mode =="Mixed":
+                     replacements = {
+                         "a": "@", 
+                         "e": "3", 
+                         "i": "1", 
+                         "o": "0",
+                         "b":"#",
+                         "c":"8",
+                         "r":"8"
+             
+                      }       
+                     table = str.maketrans(replacements)
+                     length=4
+                     choices = string.ascii_letters + string.digits
+                     random_string = "".join(random.choices(choices, k=4))
+
+                     password = name.translate(table) + random_string
+                     return render_template("pass1.html",mode=mode,name=name,password=password)
+             
+    
+        elif mode=="Random":
+
+                                 length = 8
+        password=''.join(random.choice(string.ascii_letters + string.digits) for _ in range(length))
+        return render_template("pass1.html",mode=mode,name=name,password=password)
+
     else:
-     #if not stay in the same page 
+    # if not stay in the same page
+        return render_template("pass.html", passes=PASSWORDS)
+              
+              
+        
+    
+    
+    
+        
+          
+    
+    
+        #if not stay in the same page 
 
 
-     return render_template("pass.html")
+        return render_template("pass.html" , passes=PASSWORDS)
     
